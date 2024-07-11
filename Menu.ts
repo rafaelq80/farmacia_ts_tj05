@@ -1,14 +1,24 @@
 ﻿import readlinesync = require("readline-sync");
 import { colors } from "./src/util/Colors";
 import { Medicamento } from "./src/model/Medicamento";
+import { ProdutoController } from "./src/controller/ProdutoController";
+import { Cosmetico } from "./src/model/Cosmetico";
 
 
 export function main() {
 
-    let opcao: number;
+    let opcao, id, tipo, preco: number;
+    let nome, generico, fragancia: string;
+    let tipoProduto = ['Medicamento', 'Cosmetico'];
 
-    const m1: Medicamento = new Medicamento(1, "Teste", 1, 100, "Teste");
-    m1.visualizar();   
+    // Objeto da Classe ProdutoController
+    const produtoController: ProdutoController = new ProdutoController();
+
+    produtoController.cadastrar(new Medicamento(produtoController.gerarId(),
+        "Tylenol 750 mg", 1, 45.00, "Paracetamol 750 mg"));
+
+    produtoController.cadastrar(new Cosmetico(produtoController.gerarId(),
+        "Rimel", 2, 60.00, "Neutra"));
 
     while (true) {
 
@@ -46,32 +56,84 @@ export function main() {
                 console.log(colors.fg.whitestrong,
                     "\n\nCriar Produto\n\n", colors.reset);
 
+                nome = readlinesync.question("Digite o Nome do Produto: ");
+
+                tipo = readlinesync.keyInSelect(tipoProduto, "", { cancel: false }) + 1;
+
+                preco = readlinesync.questionFloat("Digite o preco: ");
+
+                switch (tipo) {
+                    case 1:
+                        generico = readlinesync.question("Digite o Nome Generico do Medicamento: ");
+                        produtoController.cadastrar(new Medicamento(produtoController.gerarId(),
+                            nome, tipo, preco, generico));
+                        break;
+                    case 2:
+                        fragancia = readlinesync.question("Digite a frangancia do Cosmetico: ");
+                        produtoController.cadastrar(new Cosmetico(produtoController.gerarId(),
+                            nome, tipo, preco, fragancia));
+                        break;
+                }
 
                 keyPress()
                 break;
             case 2:
                 console.log(colors.fg.whitestrong,
                     "\n\nListar todos os Produtos\n\n", colors.reset);
-   
+
+                produtoController.listarTodas();
+
                 keyPress()
                 break;
             case 3:
                 console.log(colors.fg.whitestrong,
                     "\n\nConsultar Produtos - por Id\n\n", colors.reset);
 
+                id = readlinesync.questionInt("Digite o Id do Produto: ");
+                produtoController.procurarPorId(id);
 
                 keyPress()
                 break;
             case 4:
                 console.log(colors.fg.whitestrong,
                     "\n\nAtualizar dados do Produto\n\n", colors.reset);
-    
+
+                id = readlinesync.questionInt("Digite o Id do Produto: ");
+
+                let produto = produtoController.buscarNoArray(id);
+
+                if (produto !== null) {
+
+                    nome = readlinesync.question("Digite o Nome do Produto: ");
+
+                    tipo = produto.tipo;
+
+                    preco = readlinesync.questionFloat("Digite o preco: ");
+
+                    switch (tipo) {
+                        case 1:
+                            generico = readlinesync.question("Digite o Nome Generico do Medicamento: ");
+                            produtoController.atualizar(new Medicamento(id,
+                                nome, tipo, preco, generico));
+                            break;
+                        case 2:
+                            fragancia = readlinesync.question("Digite a frangancia do Cosmetico: ");
+                            produtoController.atualizar(new Cosmetico(id,
+                                nome, tipo, preco, fragancia));
+                            break;
+                    }
+
+                } else
+                    console.log("Produto não Encontrado!")
 
                 keyPress()
                 break;
             case 5:
                 console.log(colors.fg.whitestrong,
                     "\n\nApagar um Produto\n\n", colors.reset);
+
+                id = readlinesync.questionInt("Digite o Id do Produto: ");
+                produtoController.deletar(id);
 
                 keyPress()
                 break;
