@@ -1,10 +1,14 @@
 ﻿import readlinesync = require("readline-sync");
 import { colors } from "./src/util/Colors";
+import { Medicamento } from "./src/model/Medicamento";
 
 
 export function main() {
 
     let opcao: number;
+
+    const m1: Medicamento = new Medicamento(1, "Teste", 1, 100, "Teste");
+    m1.visualizar();   
 
     while (true) {
 
