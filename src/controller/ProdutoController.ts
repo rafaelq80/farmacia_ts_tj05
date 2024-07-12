@@ -44,11 +44,18 @@ export class ProdutoController implements ProdutoRepository {
      */
     listarTodas(): void {
 
+        /**
+         * Verifica se o array está vazio.
+         * Caso esteja, lança uma Exceção através do comando throw
+         */
+        if (this.listaProdutos.length === 0)
+            throw new Error("O Estoque está vazio!");
+
          /**
          * Através do Método for...of, percorre todo o array e exibe 
          * os dados de todos os Objetos na tela, através do Método visualizar().
-         */
-        for (let produto of this.listaProdutos) {
+         */       
+         for (let produto of this.listaProdutos) {
             produto.visualizar()
         }
     }

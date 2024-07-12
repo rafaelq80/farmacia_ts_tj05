@@ -15,13 +15,6 @@ export function main() {
     // Através deste Objeto teremos acesso aos Métodos da Classe ProdutoController
     const produtoController: ProdutoController = new ProdutoController();
 
-    // Objetos criados para testar os Métodos da Classe ProdutoController
-    produtoController.cadastrar(new Medicamento(produtoController.gerarId(),
-        "Tylenol 750 mg", 1, 45.00, "Paracetamol 750 mg"));
-
-    produtoController.cadastrar(new Cosmetico(produtoController.gerarId(),
-        "Rimel", 2, 60.00, "Neutra"));
-
     while (true) {
 
         console.log(colors.bg.black, colors.fg.green,
@@ -90,7 +83,14 @@ export function main() {
                 console.log(colors.fg.whitestrong,
                     "\n\nListar todos os Produtos\n\n", colors.reset);
 
-                produtoController.listarTodas();
+                    // Exemplo de uso Try Catch
+                    // Captura a Exceção lançada no Método listarTodas()
+                    try{
+                        produtoController.listarTodas();
+                    }catch(error: any){
+                        console.error("\nNão Existem Produtos Cadastrados!")
+                    }
+                
 
                 keyPress()
                 break;
