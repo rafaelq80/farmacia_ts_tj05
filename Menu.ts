@@ -11,9 +11,11 @@ export function main() {
     let nome, generico, fragancia: string;
     let tipoProduto = ['Medicamento', 'Cosmetico'];
 
-    // Objeto da Classe ProdutoController
+    // Instancia da Classe ProdutoController
+    // Através deste Objeto teremos acesso aos Métodos da Classe ProdutoController
     const produtoController: ProdutoController = new ProdutoController();
 
+    // Objetos criados para testar os Métodos da Classe ProdutoController
     produtoController.cadastrar(new Medicamento(produtoController.gerarId(),
         "Tylenol 750 mg", 1, 45.00, "Paracetamol 750 mg"));
 
@@ -68,11 +70,15 @@ export function main() {
                 switch (tipo) {
                     case 1:
                         generico = readlinesync.question("Digite o Nome Generico do Medicamento: ");
+                        
+                        // Observe que chamamos o método gerarId() para criar um novo Id
                         produtoController.cadastrar(new Medicamento(produtoController.gerarId(),
                             nome, tipo, preco, generico));
                         break;
                     case 2:
                         fragancia = readlinesync.question("Digite a frangancia do Cosmetico: ");
+                        
+                        // Observe que chamamos o método gerarId() para criar um novo Id
                         produtoController.cadastrar(new Cosmetico(produtoController.gerarId(),
                             nome, tipo, preco, fragancia));
                         break;
@@ -117,11 +123,17 @@ export function main() {
                     switch (tipo) {
                         case 1:
                             generico = readlinesync.question("Digite o Nome Generico do Medicamento: ");
+                            
+                            // Observe que na atualização, enviamos o id, ao invés de chamaramos
+                            // o método gerarId()
                             produtoController.atualizar(new Medicamento(id,
                                 nome, tipo, preco, generico));
                             break;
                         case 2:
                             fragancia = readlinesync.question("Digite a frangancia do Cosmetico: ");
+                            
+                            // Observe que na atualização, enviamos o id, ao invés de chamaramos
+                            // o método gerarId()
                             produtoController.atualizar(new Cosmetico(id,
                                 nome, tipo, preco, fragancia));
                             break;
