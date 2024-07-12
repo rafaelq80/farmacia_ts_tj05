@@ -56,12 +56,15 @@ export function main() {
                 console.log(colors.fg.whitestrong,
                     "\n\nCriar Produto\n\n", colors.reset);
 
+                // Cadastra os dados do Produto
+                
                 nome = readlinesync.question("Digite o Nome do Produto: ");
 
                 tipo = readlinesync.keyInSelect(tipoProduto, "", { cancel: false }) + 1;
 
                 preco = readlinesync.questionFloat("Digite o preco: ");
 
+                // Verifica o tipo do produto e instancia o Objeto de acordo com o tipo
                 switch (tipo) {
                     case 1:
                         generico = readlinesync.question("Digite o Nome Generico do Medicamento: ");
@@ -100,6 +103,7 @@ export function main() {
 
                 id = readlinesync.questionInt("Digite o Id do Produto: ");
 
+                // Verifica se o Produto existe
                 let produto = produtoController.buscarNoArray(id);
 
                 if (produto !== null) {
@@ -157,6 +161,8 @@ function sobre(): void {
     console.log("*****************************************************");
 }
 
+// Função responsável poe aguardar que o usuário pressione a tecla enter
+// no menu
 function keyPress(): void {
     console.log(colors.reset, "");
     console.log("\nPressione enter para continuar...");
